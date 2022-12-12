@@ -26,10 +26,7 @@ const countItems = async () => {
 
 const getAllTodos = async () => {
   try {
-    const todos = await Todo.findAll({
-      where: { completed: true },
-      order: [["id", "DESC"]],
-    });
+    const todos = await Todo.findAll();
     const todoList = todos.map((todo) => todo.displayableString()).join("\n");
 
     console.log(todoList);
@@ -38,9 +35,48 @@ const getAllTodos = async () => {
   }
 };
 
-// IIFE (Immediately Invoked Function Expression): A JS function that runs as soon as defined
+const getSingleTodo = async () => {
+  try {
+    const todo = await Todo.findOne({
+      where: { completed: false },
+      order: [["id", "DESC"]],
+    });
+
+    console.log(todo.displayableString());
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const updateItem = async (id) => {
+  try {
+    await Todo.update({ completed: true }, { where: { id: id } });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const deleteItem = async (id) => {
+  try {
+    const deleteRowCount = await Todo.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    console.log(`Deleted ${deleteRowCount} rows!`);
+  } catch (error) {
+    console.error(error);
+  }
+};
+// IIFE (Immediately Invoked Function Expression): A JS function that runs as soon as defined.
+// Used to mimic synchronous behaviour
 (async () => {
   //   await createTodo();
-  //   await countItems();
+  // await countItems();
+  await getAllTodos();
+  // await getSingleTodo();
+  // await updateItem(2);
+  await deleteItem(2);
   await getAllTodos();
 })();
