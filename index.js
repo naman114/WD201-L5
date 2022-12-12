@@ -72,11 +72,11 @@ const deleteItem = async (id) => {
 // IIFE (Immediately Invoked Function Expression): A JS function that runs as soon as defined.
 // Used to mimic synchronous behaviour
 (async () => {
-  //   await createTodo();
-  // await countItems();
+  await createTodo();
+  await countItems();
   await getAllTodos();
-  // await getSingleTodo();
-  // await updateItem(2);
+  await getSingleTodo();
+  await updateItem(2);
   await deleteItem(2);
   await getAllTodos();
 })();
